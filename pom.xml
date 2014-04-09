@@ -26,6 +26,11 @@
 				<artifactId>maven-release-plugin</artifactId>
 				<version>1.4.1</version>
 			</plugin>
+			<plugin>
+				<groupId>org.codehaus.sonar</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>4.2</version>
+			</plugin>			
 		</plugins>
 	</build>
 	<dependencies>

@@ -5,7 +5,11 @@
  */
 package org.sample.shortestpath.infrastructure.repository;
 
+import java.util.List;
+
 import org.sample.shortestpath.domain.model.Location;
+import org.sample.shortestpath.domain.model.Route;
+import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.GraphRepository;
 
 /**
@@ -23,16 +27,16 @@ public interface LocationRepository extends GraphRepository<Location> {
 	public Location getLocationByName(String name);
 
 
-//	/**
-//	 * Gets the shortest path between the origin and the destination.
-//	 * 
-//	 * @param origin
-//	 *            the origin.
-//	 * @param destination
-//	 *            the destination.
-//	 * @return the shortest path between the origin and the destination.
-//	 */
-//	
+	/**
+	 * Gets the shortest path between the origin and the destination.
+	 * 
+	 * @param origin
+	 *            the origin.
+	 * @param destination
+	 *            the destination.
+	 * @return the shortest path between the origin and the destination.
+	 */
+	
 //	MATCH
 //		(from:Location { name:"Location A" }),
 //		(to:Location { name: "Location I"}),
@@ -41,7 +45,8 @@ public interface LocationRepository extends GraphRepository<Location> {
 //		reduce(distance = 0, r in relationships(path) | distance+r.distance) AS totalDistance
 //		ORDER BY totalDistance ASC
 //		LIMIT 1
-//	@Query("START root=node:User(login='root') MATCH root-[:knows]->friends RETURN friends")
-//	public List<Route> getShortestPath(Location origin, Location destination);
+	@Query("START from=node:Location({0}), to=node:Location({1}) "
+			+ "MATCH root-[:knows]->friends RETURN friends")
+	public List<Route> getShortestPath(Location origin, Location destination);
 
 }
