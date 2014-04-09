@@ -1,9 +1,11 @@
 /*
- *  @(#)SampleTest.java
+ *  @(#)LocationRepositoryTest.java
  * 
  *  Copyright 2014 Diego Rani Mazine. All rights reserved.
  */
 package org.sample.shortestpath.infrastructure.repository;
+
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -12,6 +14,7 @@ import org.junit.runner.RunWith;
 import org.sample.shortestpath.domain.model.Location;
 import org.sample.shortestpath.domain.model.Route;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.neo4j.core.EntityPath;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -22,7 +25,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:applicationContext.xml")
-public class SampleTest {
+public class LocationRepositoryTest {
 
 	/** Location repository. */
 	@Autowired
@@ -49,14 +52,13 @@ public class SampleTest {
 		locationRepository.save(c);
 		locationRepository.save(d);
 		locationRepository.save(e);
-		
+
 		final Route route1 = a.connectedTo(b, new Double(10));
 		final Route route2 = b.connectedTo(d, new Double(15));
 		final Route route3 = a.connectedTo(c, new Double(20));
 		final Route route4 = c.connectedTo(d, new Double(30));
 		final Route route5 = b.connectedTo(e, new Double(50));
 		final Route route6 = d.connectedTo(e, new Double(30));
-
 
 		routeRepository.save(route1);
 		routeRepository.save(route2);
@@ -73,44 +75,23 @@ public class SampleTest {
 	public void tearDown() throws Exception {
 		//
 		routeRepository.deleteAll();
-		
+
 		//
 		locationRepository.deleteAll();
 	}
 
+	/**
+	 * Test method for
+	 * {@link org.sample.shortestpath.infrastructure.repository.LocationRepository#findShortestPath()}
+	 * .
+	 */
 	@Test
 	public void test() {
-
-		final Location a = locationRepository.getLocationByName("a");
-		System.out.println("------------>>>>>>>>>>> a: " + a);
+		// Finds the shortest path between the origin and the destination
+		final Iterable<EntityPath<Location, Location>> shortestPath = locationRepository.findShortestPath("a", "d");
+		
+		// Debug
+		System.out.println("shortestPath: " + shortestPath);
 	}
 
-//	/**
-//	 * 
-//	 * @param name
-//	 * @return
-//	 */
-//	private Location createLocation(String name) {
-//		return locationRepository.save(new Location(name));
-//	}
-//
-//	/**
-//	 * 
-//	 * @param origin
-//	 * @param destination
-//	 * @param distance
-//	 * @return
-//	 */
-//	private Route createRoute(Location origin, Location destination,
-//			Double distance) {
-//		return routeRepository.save(new Route(origin, destination, distance));
-//	}
-//
-//    private void userClickedProduct(User user, Product product) {
-//
-//        user.addClickedProduct(product);
-//
-//        userRepository.save(user);
-//        productRepository.save(product);
-//    }	
 }
