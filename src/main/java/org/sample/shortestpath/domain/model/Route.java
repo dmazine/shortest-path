@@ -5,44 +5,28 @@
  */
 package org.sample.shortestpath.domain.model;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
-import org.springframework.data.neo4j.annotation.EndNode;
-import org.springframework.data.neo4j.annotation.Fetch;
-import org.springframework.data.neo4j.annotation.GraphId;
-import org.springframework.data.neo4j.annotation.RelationshipEntity;
-import org.springframework.data.neo4j.annotation.StartNode;
 
 /**
  * This class represents a route between two locations.
  * 
  * @author Diego Rani Mazine
  */
-@RelationshipEntity(type = "CONNECTED_TO")
 public class Route {
 
-	/** ID */
-	@GraphId
-	private Long id;
-
 	/** Origin. */
-	@StartNode
-	@Fetch
-	private Location origin;
+	private String origin;
 
 	/** Destination. */
-	@EndNode
-	@Fetch
-	private Location destination;
+	private String destination;
 
-	/** The distance between the locations. */
-	private Double distance;
-
-	/**
-	 * Creates a new Route object.
-	 */
-	public Route() {
-	}
+	/** The list of legs associated with this route. */
+	private List<RouteLeg> legs = null;
 
 	/**
 	 * Creates a new Route object.
@@ -51,32 +35,13 @@ public class Route {
 	 *            the route origin.
 	 * @param destination
 	 *            the route destination.
-	 * @param distance
-	 *            the distance between the two location.s
+	 * @param legs
+	 *            the list of legs associated with this route.
 	 */
-	public Route(Location origin, Location destination, double distance) {
+	public Route(String origin, String destination, List<RouteLeg> legs) {
 		setOrigin(origin);
 		setDestination(destination);
-		setDistance(distance);
-	}
-
-	/**
-	 * Gets the route id.
-	 * 
-	 * @return the route id.
-	 */
-	public Long getId() {
-		return id;
-	}
-
-	/**
-	 * Sets the route id.
-	 * 
-	 * @param id
-	 *            the id to set.
-	 */
-	public void setId(Long id) {
-		this.id = id;
+		setLegs(legs);
 	}
 
 	/**
@@ -84,7 +49,7 @@ public class Route {
 	 * 
 	 * @return the route origin.
 	 */
-	public Location getOrigin() {
+	public String getOrigin() {
 		return origin;
 	}
 
@@ -96,7 +61,7 @@ public class Route {
 	 * @throws IllegalArgumentException
 	 *             if origin is null.
 	 */
-	public void setOrigin(Location origin) {
+	private void setOrigin(String origin) {
 		if (origin == null) {
 			throw new IllegalArgumentException("origin is null");
 		}
@@ -108,7 +73,7 @@ public class Route {
 	 * 
 	 * @return the route destination.
 	 */
-	public Location getDestination() {
+	public String getDestination() {
 		return destination;
 	}
 
@@ -120,7 +85,7 @@ public class Route {
 	 * @throws IllegalArgumentException
 	 *             if destination is null.
 	 */
-	public void setDestination(Location destination) {
+	private void setDestination(String destination) {
 		if (destination == null) {
 			throw new IllegalArgumentException("destination is null");
 		}
@@ -128,30 +93,51 @@ public class Route {
 	}
 
 	/**
-	 * Gets the distance between the locations.
+	 * Gets the list of legs associated with this route.
 	 * 
-	 * @return the distance between the locations.
+	 * @return the list of legs associated with this route.
 	 */
-	public Double getDistance() {
-		return distance;
+	public List<RouteLeg> getLegs() {
+		return Collections.unmodifiableList(legs);
 	}
 
 	/**
-	 * Sets the distance between the locations.
+	 * Sets the list of legs associated with this route.
 	 * 
 	 * @param distance
-	 *            the distance to set.
+	 *            the list of legs associated with this route.
 	 * @throws IllegalArgumentException
-	 *             if distance is null or negative.
+	 *             if legs is null.
 	 */
-	public void setDistance(Double distance) {
-		if (distance == null) {
-			throw new IllegalArgumentException("distance is null");
+	private void setLegs(List<RouteLeg> legs) {
+		if (legs == null) {
+			throw new IllegalArgumentException("legs is null");
 		}
-		if (distance < 0) {
-			throw new IllegalArgumentException("distance is negative");
+		this.legs = legs;
+	}
+
+	/**
+	 * Gets the length of the route.
+	 * 
+	 * @return the length of the route.
+	 */
+	public double getLength() {
+		double length = 0;
+		for (RouteLeg leg : legs) {
+			length += leg.getDistance();
 		}
-		this.distance = distance;
+		return length;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder(17, 37).append(origin).append(destination)
+				.append(legs).toHashCode();
 	}
 
 	/*
@@ -171,8 +157,9 @@ public class Route {
 			return false;
 		}
 		final Route rhs = (Route) obj;
-		return new EqualsBuilder().appendSuper(super.equals(obj))
-				.append(id, rhs.id).isEquals();
+		return new EqualsBuilder().append(origin, rhs.origin)
+				.append(destination, rhs.destination).append(legs, rhs.legs)
+				.isEquals();
 	}
 
 	/*
