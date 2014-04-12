@@ -1,9 +1,27 @@
 /*
- *  @(#)AbstractNeo4jRouteRepository.java
+ * The MIT License (MIT)
  * 
- *  Copyright 2014 Diego Rani Mazine. All rights reserved.
+ * Copyright (c) 2014 Diego Rani Mazine
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  */
-package org.sample.shortestpath.infrastructure.repository.neo4j;
+package org.drmit.shortestpath.infrastructure.repository.neo4j;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -16,10 +34,10 @@ import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.RelationshipType;
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.index.Index;
-import org.sample.shortestpath.domain.model.Route;
-import org.sample.shortestpath.domain.model.RouteLeg;
-import org.sample.shortestpath.infrastructure.repository.RepositoryExeption;
-import org.sample.shortestpath.infrastructure.repository.RouteRepository;
+import org.drmit.shortestpath.domain.model.Route;
+import org.drmit.shortestpath.domain.model.RouteLeg;
+import org.drmit.shortestpath.infrastructure.repository.RepositoryExeption;
+import org.drmit.shortestpath.infrastructure.repository.RouteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -128,8 +146,8 @@ public abstract class AbstractNeo4jRouteRepository implements RouteRepository {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.sample.poc.dijkstra.infrastructure.repository.RouteRepository#saveLeg
-	 * (org.sample.poc.dijkstra.domain.model.RouteLeg)
+	 * org.drmit.poc.dijkstra.infrastructure.repository.RouteRepository#saveLeg
+	 * (org.drmit.poc.dijkstra.domain.model.RouteLeg)
 	 */
 	@Override
 	public void saveLeg(RouteLeg leg) throws RepositoryExeption {
@@ -151,7 +169,7 @@ public abstract class AbstractNeo4jRouteRepository implements RouteRepository {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.sample.poc.dijkstra.infrastructure.repository.RouteRepository#saveLegs
+	 * org.drmit.poc.dijkstra.infrastructure.repository.RouteRepository#saveLegs
 	 * (java.util.List)
 	 */
 	@Override
@@ -195,7 +213,7 @@ public abstract class AbstractNeo4jRouteRepository implements RouteRepository {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.sample.poc.dijkstra.infrastructure.repository.RouteRepository#
+	 * @see org.drmit.poc.dijkstra.infrastructure.repository.RouteRepository#
 	 * findShortestRoute(java.lang.String, java.lang.String)
 	 */
 	@Override
