@@ -35,7 +35,7 @@ import org.neo4j.graphdb.RelationshipType;
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.index.Index;
 import org.drmit.shortestpath.domain.model.Route;
-import org.drmit.shortestpath.domain.model.RouteLeg;
+import org.drmit.shortestpath.domain.model.Leg;
 import org.drmit.shortestpath.infrastructure.repository.RepositoryExeption;
 import org.drmit.shortestpath.infrastructure.repository.RouteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -150,7 +150,7 @@ public abstract class AbstractNeo4jRouteRepository implements RouteRepository {
 	 * (org.drmit.poc.dijkstra.domain.model.RouteLeg)
 	 */
 	@Override
-	public void saveLeg(RouteLeg leg) throws RepositoryExeption {
+	public void saveLeg(Leg leg) throws RepositoryExeption {
 		if (leg == null) {
 			throw new IllegalArgumentException("leg is null");
 
@@ -173,14 +173,14 @@ public abstract class AbstractNeo4jRouteRepository implements RouteRepository {
 	 * (java.util.List)
 	 */
 	@Override
-	public void saveLegs(List<RouteLeg> legs) throws RepositoryExeption {
+	public void saveLegs(List<Leg> legs) throws RepositoryExeption {
 		if (legs == null) {
 			throw new IllegalArgumentException("leg is null");
 		}
 
 		try (final Transaction tx = graphDatabase.beginTx()) {
 			// Persists all given Legs into the repository
-			for (RouteLeg leg : legs) {
+			for (Leg leg : legs) {
 				persist(leg);
 			}
 
@@ -198,7 +198,7 @@ public abstract class AbstractNeo4jRouteRepository implements RouteRepository {
 	 * @throws RepositoryExeption
 	 *             if a repository access error occurs.
 	 */
-	protected void persist(RouteLeg leg) throws RepositoryExeption {
+	protected void persist(Leg leg) throws RepositoryExeption {
 		if (leg == null) {
 			throw new IllegalArgumentException("leg is null");
 		}
@@ -254,7 +254,7 @@ public abstract class AbstractNeo4jRouteRepository implements RouteRepository {
 			throw new IllegalArgumentException("path is null");
 		}
 
-		final List<RouteLeg> legs = new LinkedList<RouteLeg>();
+		final List<Leg> legs = new LinkedList<Leg>();
 		for (Relationship relationship : path.relationships()) {
 			legs.add(toRouteLeg(relationship));
 		}
@@ -272,12 +272,12 @@ public abstract class AbstractNeo4jRouteRepository implements RouteRepository {
 	 * @throws IllegalArgumentException
 	 *             if relationship is null.
 	 */
-	protected RouteLeg toRouteLeg(Relationship relationship) {
+	protected Leg toRouteLeg(Relationship relationship) {
 		if (relationship == null) {
 			throw new IllegalArgumentException("relationship is null");
 		}
 
-		return new RouteLeg((String) relationship.getStartNode().getProperty(
+		return new Leg((String) relationship.getStartNode().getProperty(
 				NAME_PROPERTY_KEY), (String) relationship.getEndNode()
 				.getProperty(NAME_PROPERTY_KEY),
 				(double) relationship.getProperty(DISTANCE_PROPERTY_KEY));

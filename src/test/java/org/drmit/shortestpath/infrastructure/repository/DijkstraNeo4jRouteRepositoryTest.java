@@ -33,7 +33,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.drmit.shortestpath.domain.model.Route;
-import org.drmit.shortestpath.domain.model.RouteLeg;
+import org.drmit.shortestpath.domain.model.Leg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -44,7 +44,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * @author Diego Rani Mazine
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:DijkstraNeo4jRouteRepositoryTest.xml")
+@ContextConfiguration("classpath:applicationContext-test.xml")
 public class DijkstraNeo4jRouteRepositoryTest {
 
 	/** Location repository. */
@@ -52,18 +52,21 @@ public class DijkstraNeo4jRouteRepositoryTest {
 	private RouteRepository routeRepository;
 
 	/**
-	 * @throws java.lang.Exception
+	 * Sets up the fixture.
+	 * 
+	 * @throws Exception
+	 *             if an error occurs.
 	 */
 	@Before
 	public void setUp() throws Exception {
-		// Populates the database
-		final List<RouteLeg> legs = new LinkedList<RouteLeg>();
-		legs.add(new RouteLeg("A", "B", 10));
-		legs.add(new RouteLeg("B", "D", 15));
-		legs.add(new RouteLeg("A", "C", 20));
-		legs.add(new RouteLeg("C", "D", 20));
-		legs.add(new RouteLeg("B", "E", 50));
-		legs.add(new RouteLeg("D", "E", 50));
+		// Creates the route legs
+		final List<Leg> legs = new LinkedList<Leg>();
+		legs.add(new Leg("A", "B", 10));
+		legs.add(new Leg("B", "D", 15));
+		legs.add(new Leg("A", "C", 20));
+		legs.add(new Leg("C", "D", 20));
+		legs.add(new Leg("B", "E", 50));
+		legs.add(new Leg("D", "E", 50));
 
 		// Saves all given Legs into the repository
 		routeRepository.saveLegs(legs);
@@ -102,12 +105,12 @@ public class DijkstraNeo4jRouteRepositoryTest {
 		final Route actualRoute = routeRepository.findShortestRoute("A", "A");
 
 		// Expected legs
-		final List<RouteLeg> expectedLegs = Collections.emptyList();
+		final List<Leg> expectedLegs = Collections.emptyList();
 
 		// Expected route
 		final Route expectedRoute = new Route("A", "A", expectedLegs);
 
-		// Asserts that the expected and the actual route are equals
+		// Asserts that the expected and the actual values are equals
 		assertEquals(expectedRoute, actualRoute);
 		assertEquals(expectedRoute.getLength(), 0, 0.001);
 	}
@@ -123,14 +126,14 @@ public class DijkstraNeo4jRouteRepositoryTest {
 		final Route actualRoute = routeRepository.findShortestRoute("A", "D");
 
 		// Expected legs
-		final List<RouteLeg> expectedLegs = new LinkedList<RouteLeg>();
-		expectedLegs.add(new RouteLeg("A", "B", 10));
-		expectedLegs.add(new RouteLeg("B", "D", 15));
+		final List<Leg> expectedLegs = new LinkedList<Leg>();
+		expectedLegs.add(new Leg("A", "B", 10));
+		expectedLegs.add(new Leg("B", "D", 15));
 
 		// Expected route
 		final Route expectedRoute = new Route("A", "D", expectedLegs);
 
-		// Asserts that the expected and the actual route are equals
+		// Asserts that the expected and the actual values are equals
 		assertEquals(expectedRoute, actualRoute);
 		assertEquals(expectedRoute.getLength(), 25, 0.001);
 	}
@@ -148,7 +151,7 @@ public class DijkstraNeo4jRouteRepositoryTest {
 		// Finds the shortest route between the origin and the destination
 		final Route returnRoute = routeRepository.findShortestRoute("D", "A");
 
-		// Asserts that the expected and the actual route are equals
+		// Asserts that the expected and the actual values are equals
 		assertEquals(route.getLength(), returnRoute.getLength(), 0.001);
 	}
 

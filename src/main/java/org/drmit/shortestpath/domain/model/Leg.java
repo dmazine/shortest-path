@@ -35,7 +35,7 @@ import org.apache.commons.lang.builder.ReflectionToStringBuilder;
  * 
  * @author Diego Rani Mazine
  */
-public class RouteLeg implements Serializable {
+public class Leg implements Serializable {
 
 	/** Serial version id. */
 	private static final long serialVersionUID = 1L;
@@ -50,7 +50,7 @@ public class RouteLeg implements Serializable {
 	private double distance;
 
 	/**
-	 * Creates a new RouteLeg object.
+	 * Creates a new Leg object.
 	 * 
 	 * @param origin
 	 *            the leg origin.
@@ -59,7 +59,7 @@ public class RouteLeg implements Serializable {
 	 * @param distance
 	 *            the distance covered by this leg.
 	 */
-	public RouteLeg(String origin, String destination, double distance) {
+	public Leg(String origin, String destination, double distance) {
 		setOrigin(origin);
 		setDestination(destination);
 		setDistance(distance);
@@ -130,7 +130,7 @@ public class RouteLeg implements Serializable {
 	 * @throws IllegalArgumentException
 	 *             if distance is negative.
 	 */
-	public void setDistance(double distance) {
+	private void setDistance(double distance) {
 		if (distance < 0) {
 			throw new IllegalArgumentException("distance is negative");
 		}
@@ -164,7 +164,7 @@ public class RouteLeg implements Serializable {
 		if (obj.getClass() != getClass()) {
 			return false;
 		}
-		final RouteLeg rhs = (RouteLeg) obj;
+		final Leg rhs = (Leg) obj;
 		return new EqualsBuilder().append(origin, rhs.origin)
 				.append(destination, rhs.destination).isEquals();
 	}

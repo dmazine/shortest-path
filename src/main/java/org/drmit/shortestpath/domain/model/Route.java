@@ -48,7 +48,7 @@ public class Route implements Serializable {
 	private String destination;
 
 	/** The list of legs associated with this route. */
-	private List<RouteLeg> legs = null;
+	private List<Leg> legs = null;
 
 	/**
 	 * Creates a new Route object.
@@ -60,7 +60,7 @@ public class Route implements Serializable {
 	 * @param legs
 	 *            the list of legs associated with this route.
 	 */
-	public Route(String origin, String destination, List<RouteLeg> legs) {
+	public Route(String origin, String destination, List<Leg> legs) {
 		setOrigin(origin);
 		setDestination(destination);
 		setLegs(legs);
@@ -115,11 +115,12 @@ public class Route implements Serializable {
 	}
 
 	/**
-	 * Gets the list of legs associated with this route.
+	 * Gets an unmodifiable view of the list of legs associated with this route.
 	 * 
-	 * @return the list of legs associated with this route.
+	 * @return an unmodifiable view of the list of legs associated with this
+	 *         route.
 	 */
-	public List<RouteLeg> getLegs() {
+	public List<Leg> getLegs() {
 		return Collections.unmodifiableList(legs);
 	}
 
@@ -131,7 +132,7 @@ public class Route implements Serializable {
 	 * @throws IllegalArgumentException
 	 *             if legs is null.
 	 */
-	private void setLegs(List<RouteLeg> legs) {
+	private void setLegs(List<Leg> legs) {
 		if (legs == null) {
 			throw new IllegalArgumentException("legs is null");
 		}
@@ -145,7 +146,7 @@ public class Route implements Serializable {
 	 */
 	public double getLength() {
 		double length = 0;
-		for (RouteLeg leg : legs) {
+		for (Leg leg : legs) {
 			length += leg.getDistance();
 		}
 		return length;

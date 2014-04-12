@@ -26,7 +26,7 @@ package org.drmit.shortestpath.infrastructure.repository;
 import java.util.List;
 
 import org.drmit.shortestpath.domain.model.Route;
-import org.drmit.shortestpath.domain.model.RouteLeg;
+import org.drmit.shortestpath.domain.model.Leg;
 
 /**
  * This interface defines a Route repository.
@@ -44,7 +44,7 @@ public interface RouteRepository {
 	 * @throws RepositoryExeption
 	 *             if a repository access error occurs.
 	 */
-	public void saveLeg(RouteLeg leg) throws RepositoryExeption;
+	public void saveLeg(Leg leg) throws RepositoryExeption;
 
 	/**
 	 * Saves all given Legs into the repository. If a Leg already exists in the
@@ -55,7 +55,7 @@ public interface RouteRepository {
 	 * @throws RepositoryExeption
 	 *             if a repository access error occurs.
 	 */
-	public void saveLegs(List<RouteLeg> legs) throws RepositoryExeption;
+	public void saveLegs(List<Leg> legs) throws RepositoryExeption;
 
 	/**
 	 * Tries to find the shortest route between the origin and the destination.
