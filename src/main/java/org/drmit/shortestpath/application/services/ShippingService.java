@@ -56,11 +56,14 @@ public interface ShippingService {
 	 * @param fuelPrice
 	 *            fuel price per liter.
 	 * @return the order shipping details.
+	 * @throws NoShippingRouteServiceException
+	 *             if no shipping route could be found between the origin and
+	 *             destination.
 	 * @throws ServiceException
 	 *             if a service access error occurs.
 	 */
 	public ShippingDetails getShippingDetails(String origin,
 			String destination, double vehicleMileage, double fuelPrice)
-			throws ServiceException;
+			throws NoShippingRouteServiceException, ServiceException;
 
 }

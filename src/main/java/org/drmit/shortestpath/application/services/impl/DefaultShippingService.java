@@ -23,12 +23,14 @@
  */
 package org.drmit.shortestpath.application.services.impl;
 
+import org.drmit.shortestpath.application.services.NoShippingRouteServiceException;
 import org.drmit.shortestpath.application.services.ServiceException;
 import org.drmit.shortestpath.application.services.ShippingRatingService;
 import org.drmit.shortestpath.application.services.ShippingService;
 import org.drmit.shortestpath.domain.model.LogisticsNetwork;
 import org.drmit.shortestpath.domain.model.Route;
 import org.drmit.shortestpath.domain.model.ShippingDetails;
+import org.drmit.shortestpath.infrastructure.repository.RouteNotFoundRepositoryExeption;
 import org.drmit.shortestpath.infrastructure.repository.RouteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,23 +43,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class DefaultShippingService implements ShippingService {
 
-	/**
-	 * The underlying route repository.
-	 */
+	/** The underlying route repository implementation. */
 	private RouteRepository routeRepository = null;
 
-	/**
-	 * The underlying shipping rating service.
-	 */
+	/** The underlying shipping rating service implementation. */
 	private ShippingRatingService shippingRatingService = null;
 
 	/**
 	 * Constructs a new DefaultShippingService object.
 	 * 
 	 * @param routeRepository
-	 *            the underlying route repository.
+	 *            the underlying route repository implementation.
 	 * @param shippingRatingService
-	 *            the underlying shipping rating service.
+	 *            the underlying shipping rating service implementation.
 	 * @throws IllegalArgumentExcpetion
 	 *             if routeRepository or shippingRatingService is null.
 	 */
@@ -102,8 +100,12 @@ public class DefaultShippingService implements ShippingService {
 	}
 
 	/**
+	 * Sets the underlying shipping rating service implementation.
+	 * 
 	 * @param shippingRatingService
-	 *            the shippingRatingService to set
+	 *            the rating service to set
+	 * @throws IllegalArgumentException
+	 *             if shippingRatingService is null.
 	 */
 	private void setShippingRatingService(
 			ShippingRatingService shippingRatingService) {
@@ -123,7 +125,7 @@ public class DefaultShippingService implements ShippingService {
 	public void addLogisticsNetwork(LogisticsNetwork logisticsNetwork)
 			throws ServiceException {
 		if (logisticsNetwork == null) {
-			throw new IllegalArgumentException("logisticsNewtork is null");
+			throw new IllegalArgumentException("logisticsNetwork is null");
 		}
 
 		try {
@@ -144,7 +146,7 @@ public class DefaultShippingService implements ShippingService {
 	@Override
 	public ShippingDetails getShippingDetails(String origin,
 			String destination, double vehicleMileage, double fuelPrice)
-			throws ServiceException {
+			throws NoShippingRouteServiceException, ServiceException {
 		if (origin == null) {
 			throw new IllegalArgumentException("origin is null");
 		}
@@ -166,6 +168,9 @@ public class DefaultShippingService implements ShippingService {
 			// Returns the order shipping details
 			return new ShippingDetails(shippingRatingService.getShippingRate(
 					route.getLength(), vehicleMileage, fuelPrice), route);
+		} catch (RouteNotFoundRepositoryExeption e) {
+			// Propagates the exception
+			throw new NoShippingRouteServiceException(e.getMessage(), e);
 		} catch (Exception e) {
 			// Propagates the exception
 			throw new ServiceException(e.getMessage(), e);

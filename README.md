@@ -54,3 +54,7 @@ obviamente, a sua natureza orientada a grafos.
 Visando ainda a simplicidade do código, o baixo acoplamento e melhoria da
 testabilidade da aplicação será utilizado o framework [Spring Framework]
 (http://projects.spring.io/spring-framework/) para a injeção de dependências.
+
+
+http://localhost:8080/shortest-path/shipping/shippingDetails?origin=A&destination=D&vehicleMileage=10&fuelPrice=2.5
+

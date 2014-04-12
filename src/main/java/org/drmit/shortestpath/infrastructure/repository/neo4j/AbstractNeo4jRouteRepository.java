@@ -37,6 +37,7 @@ import org.neo4j.graphdb.index.Index;
 import org.drmit.shortestpath.domain.model.Route;
 import org.drmit.shortestpath.domain.model.Leg;
 import org.drmit.shortestpath.infrastructure.repository.RepositoryExeption;
+import org.drmit.shortestpath.infrastructure.repository.RouteNotFoundRepositoryExeption;
 import org.drmit.shortestpath.infrastructure.repository.RouteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -213,12 +214,12 @@ public abstract class AbstractNeo4jRouteRepository implements RouteRepository {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.drmit.poc.dijkstra.infrastructure.repository.RouteRepository#
+	 * @see org.drmit.shortestpath.infrastructure.repository.RouteRepository#
 	 * findShortestRoute(java.lang.String, java.lang.String)
 	 */
 	@Override
 	public Route findShortestRoute(String origin, String destination)
-			throws RepositoryExeption {
+			throws RouteNotFoundRepositoryExeption, RepositoryExeption {
 		if (origin == null) {
 			throw new IllegalArgumentException("origin is null");
 
@@ -231,6 +232,11 @@ public abstract class AbstractNeo4jRouteRepository implements RouteRepository {
 			// Finds the shortest path between the origin and the destination
 			final Path path = getPathFinder().findSinglePath(getNode(origin),
 					getNode(destination));
+			if (path == null) {
+				throw new RouteNotFoundRepositoryExeption(String.format(
+						"No route could be found between the %s and %s",
+						origin, destination));
+			}
 
 			// Commits the transaction
 			tx.success();

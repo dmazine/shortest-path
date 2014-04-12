@@ -64,12 +64,14 @@ public interface RouteRepository {
 	 *            the route origin.
 	 * @param destination
 	 *            the route destination.
-	 * @return the shortest route between the origin and the destination, or
-	 *         null if no path was found.
+	 * @return the shortest route between the origin and the destination.
+	 * @throws RouteNotFoundRepositoryExeption
+	 *             if no route could be found between the origin and
+	 *             destination.
 	 * @throws RepositoryExeption
 	 *             if a repository access error occurs.
 	 */
 	public Route findShortestRoute(String origin, String destination)
-			throws RepositoryExeption;
+			throws RouteNotFoundRepositoryExeption, RepositoryExeption;
 
 }

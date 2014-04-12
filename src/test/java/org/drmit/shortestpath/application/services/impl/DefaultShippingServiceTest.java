@@ -28,6 +28,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.drmit.shortestpath.application.services.NoShippingRouteServiceException;
 import org.drmit.shortestpath.application.services.ServiceException;
 import org.drmit.shortestpath.application.services.ShippingService;
 import org.drmit.shortestpath.domain.model.Leg;
@@ -85,10 +86,12 @@ public class DefaultShippingServiceTest {
 	 * .
 	 */
 	@Test
-	public void testGetShippingDetails() throws ServiceException {
+	public void testGetShippingDetails()
+			throws NoShippingRouteServiceException, ServiceException {
 		// Gets the order shipping details
-		final ShippingDetails shippingDetails = shippingService.getShippingDetails("A", "D", 10, 2.5);
-		
+		final ShippingDetails shippingDetails = shippingService
+				.getShippingDetails("A", "D", 10, 2.5);
+
 		// Expected legs
 		final List<Leg> expectedLegs = new LinkedList<Leg>();
 		expectedLegs.add(new Leg("A", "B", 10));
@@ -96,7 +99,7 @@ public class DefaultShippingServiceTest {
 
 		// Expected route
 		final Route expectedRoute = new Route("A", "D", expectedLegs);
-		
+
 		// Asserts that the expected and the actual values are equals
 		assertEquals(6.25, shippingDetails.getShippingRate(), 0.001);
 		assertEquals(expectedRoute, shippingDetails.getShippingRoute());
