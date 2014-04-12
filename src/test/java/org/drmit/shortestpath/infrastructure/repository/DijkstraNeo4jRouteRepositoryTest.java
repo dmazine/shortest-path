@@ -39,8 +39,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
- * @author Diego Rani Mazine
+ * DijkstraNeo4jRouteRepository test case.
  * 
+ * @author Diego Rani Mazine
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:DijkstraNeo4jRouteRepositoryTest.xml")
