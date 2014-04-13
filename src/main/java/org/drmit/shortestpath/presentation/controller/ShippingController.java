@@ -30,6 +30,7 @@ import org.drmit.shortestpath.domain.model.LogisticsNetwork;
 import org.drmit.shortestpath.domain.model.ShippingDetails;
 import org.drmit.shortestpath.presentation.converter.LogisticsNetworkConverter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,6 +38,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
  * Shipping controller.
@@ -66,13 +68,12 @@ public class ShippingController {
 	 *             if a service access error occurs.
 	 */
 	@RequestMapping(value = "/logisticsNetwork/{name}", method = RequestMethod.PUT)
-	public @ResponseBody
-	String addLogisticsNetwork(@PathVariable String name,
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void addLogisticsNetwork(@PathVariable String name,
 			@RequestBody String legs) throws ServiceException {
 		// Adds a new logistics network used for shipping route selection
 		shippingService.addLogisticsNetwork(new LogisticsNetwork(name,
 				logisticsNetworkConverter.parseLegs(legs)));
-		return legs;
 	}
 
 	/**
@@ -90,10 +91,10 @@ public class ShippingController {
 	 * @throws ServiceException
 	 *             if a service access error occurs.
 	 */
-	@RequestMapping(value = "/shippingDetails", method = RequestMethod.GET)
+	@RequestMapping(value = "/shippingDetails/{origin}/{destination}", method = RequestMethod.GET)
 	public @ResponseBody
-	ShippingDetails getShippingDetails(@RequestParam String origin,
-			@RequestParam String destination,
+	ShippingDetails getShippingDetails(@PathVariable String origin,
+			@PathVariable String destination,
 			@RequestParam double vehicleMileage, @RequestParam double fuelPrice)
 			throws NoShippingRouteServiceException, ServiceException {
 		// Gets an order shipping details
