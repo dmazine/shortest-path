@@ -38,9 +38,10 @@ import org.springframework.stereotype.Component;
  * <p>
  * A Logistics Network consists of multiple Legs, each one defined as a line of
  * characters terminated either by a set of line terminator characters (\n or \r
- * or \r\n) or by the end of the stream. Each Leg has the syntax <b>origin
- * destination distance<b>. Examples:
+ * or \r\n) or by the end of the stream. Each Leg has the syntax
+ * <b>origin&lt;space&gt;destination&lt;space&gt;distance</b>.
  * </p>
+ * Example:
  * 
  * <pre>
  * A B 10
