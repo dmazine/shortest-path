@@ -43,9 +43,9 @@ public class ShippingDetails {
 	/**
 	 * Constructs a ShippingDetails object.
 	 * 
-	 * @param rate
+	 * @param shippingRate
 	 *            the shipping rate.
-	 * @param route
+	 * @param shippingRoute
 	 *            the shipping rate.
 	 * @throws IllegalArgumentException
 	 *             if shippingRate is negative.
