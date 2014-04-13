@@ -141,24 +141,6 @@ public class DijkstraNeo4jRouteRepositoryTest {
 		assertEquals(expectedRoute, actualRoute);
 		assertEquals(expectedRoute.getLength(), 25, 0.001);
 	}
-	
-	/**
-	 * Test method for
-	 * {@link org.drmit.poc.dijkstra.infrastructure.repository.neo4j.AbstractNeo4jRouteRepository#findShortestRoute(java.lang.String, java.lang.String)}
-	 * .
-	 */
-	@Test
-	public void testRoundTrip() throws RouteNotFoundRepositoryExeption,
-			RepositoryExeption {
-		// Finds the shortest route between the origin and the destination
-		final Route route = routeRepository.findShortestRoute("A", "D");
-
-		// Finds the shortest route between the origin and the destination
-		final Route returnRoute = routeRepository.findShortestRoute("D", "A");
-
-		// Asserts that the expected and the actual values are equals
-		assertEquals(route.getLength(), returnRoute.getLength(), 0.001);
-	}
 
 	/**
 	 * Test method for
