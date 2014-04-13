@@ -56,5 +56,9 @@ testabilidade da aplicação será utilizado o framework [Spring Framework]
 (http://projects.spring.io/spring-framework/) para a injeção de dependências.
 
 
-http://localhost:8080/shortest-path/shipping/shippingDetails/A/D?vehicleMileage=10&fuelPrice=2.5
+http://localhost:8080/shortest-path/services/shipping/logisticsNetwork/Sample
+http://localhost:8080/shortest-path/services/shipping/shippingDetails/A/D?vehicleMileage=10&fuelPrice=2.5
+
+http://diegorm.github.io/shortest-path/
+
 

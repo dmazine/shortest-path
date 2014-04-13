@@ -49,7 +49,7 @@
 	
 	<servlet-mapping>
 		<servlet-name>rest</servlet-name>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>/services/*</url-pattern>
 	</servlet-mapping>	
 
 </web-app>
