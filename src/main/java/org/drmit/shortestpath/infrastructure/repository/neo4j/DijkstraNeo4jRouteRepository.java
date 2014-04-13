@@ -28,6 +28,7 @@ import org.neo4j.graphalgo.CostEvaluator;
 import org.neo4j.graphalgo.GraphAlgoFactory;
 import org.neo4j.graphalgo.PathFinder;
 import org.neo4j.graphalgo.WeightedPath;
+import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Path;
 import org.neo4j.graphdb.PathExpanders;
@@ -51,8 +52,9 @@ public class DijkstraNeo4jRouteRepository extends AbstractNeo4jRouteRepository {
 	 * between two nodes.
 	 */
 	final PathFinder<WeightedPath> pathFinder = GraphAlgoFactory.dijkstra(
-			PathExpanders.allTypesAndDirections(), costEvaluator);
-
+			PathExpanders.forTypeAndDirection(LocationRelationshipType.CONNECTED,
+					Direction.OUTGOING), costEvaluator);
+	
 	/**
 	 * Constructs a DijkstraNeo4jRouteRepository object.
 	 * 
