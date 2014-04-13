@@ -23,26 +23,20 @@
  */
 package org.drmit.shortestpath.presentation.controller;
 
-import java.util.List;
-
 import org.drmit.shortestpath.application.services.NoShippingRouteServiceException;
 import org.drmit.shortestpath.application.services.ServiceException;
 import org.drmit.shortestpath.application.services.ShippingService;
-import org.drmit.shortestpath.domain.model.Leg;
 import org.drmit.shortestpath.domain.model.LogisticsNetwork;
 import org.drmit.shortestpath.domain.model.ShippingDetails;
 import org.drmit.shortestpath.presentation.converter.LogisticsNetworkConverter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
  * Shipping controller.
@@ -72,19 +66,13 @@ public class ShippingController {
 	 *             if a service access error occurs.
 	 */
 	@RequestMapping(value = "/logisticsNetwork/{name}", method = RequestMethod.PUT)
-	public void addLogisticsNetwork(@PathVariable String name,
+	public @ResponseBody
+	String addLogisticsNetwork(@PathVariable String name,
 			@RequestBody String legs) throws ServiceException {
-
-		System.out.println("--->>>> network name: [" + name + "]");
-		System.out.println("--->>>> legs: [" + legs + "]");
-
-		final List<Leg> legs2 = logisticsNetworkConverter.parseLegs(legs);
-
-		System.out.println("--->>>> legs2: [" + legs2 + "]");
-
 		// Adds a new logistics network used for shipping route selection
 		shippingService.addLogisticsNetwork(new LogisticsNetwork(name,
 				logisticsNetworkConverter.parseLegs(legs)));
+		return legs;
 	}
 
 	/**
@@ -111,14 +99,6 @@ public class ShippingController {
 		// Gets an order shipping details
 		return shippingService.getShippingDetails(origin, destination,
 				vehicleMileage, fuelPrice);
-	}
-
-	/**
-	 * NoShippingRouteServiceException custom exception handler.
-	 */
-	@ExceptionHandler(NoShippingRouteServiceException.class)
-	@ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "No route could be found between the origin and destination")
-	public void notFound() {
 	}
 
 }
