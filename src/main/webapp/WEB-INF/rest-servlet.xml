@@ -52,7 +52,7 @@
 	<!-- Graph database -->
 	<bean id="graphDatabase" factory-bean="graphDatabaseFactory"
 		factory-method="newEmbeddedDatabase">
-		<constructor-arg value="target/graphDb" />
+		<constructor-arg value="#{systemProperties['java.io.tmpdir']}/graphDb" />
 	</bean>
 
 </beans>
