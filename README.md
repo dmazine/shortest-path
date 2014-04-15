@@ -91,6 +91,10 @@ D E 30
 
 	Caso a requisição tenha sido processada com sucesso.
 
+- 400
+
+	Caso algum parâmetro inválido tenha sido fornecido.
+
 - 500
 
 	Caso tenha ocorrido algum erro durante o processamento da requisição.
@@ -149,9 +153,17 @@ Exemplo
 	}
 ```
 
-- 204 - Caso não exista nenhuma rota entre a origem e o destino
+- 204
 
-- 500 - Caso tenha ocorrido algum erro durante o processamento da requisição.
+	Caso não exista nenhuma rota entre a origem e o destino
+
+- 400
+
+	Caso algum parâmetro inválido tenha sido fornecido.
+
+- 500
+
+	Caso tenha ocorrido algum erro durante o processamento da requisição.
 
 ## Desenvolvedores
 
