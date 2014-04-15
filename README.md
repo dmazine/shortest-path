@@ -1,13 +1,13 @@
 Entregando Mercadorias
 ======================
 
-O projeto consiste em "novo sistema" de logística visa que obter sempre a rota com o menor custo para a entrega de mercadorias. 
+O projeto consiste em um "novo sistema" de logística que visa obter sempre a rota com o menor custo para a entrega de mercadorias. 
 
 ## Arquitetura
 
 Considerando-se que o cálculo da rota com o menor custo pode ser encarado como uma especialização do [Problema do caminho mínimo](http://pt.wikipedia.org/wiki/Problema_do_caminho_m%C3%ADnimo), cujo objetivo é determinar o menor custo para a travessia de um grafo entre dois vértices, e que as informações devem ser persistidas para que elas não se percam entre os deployments da aplicação, a utilização de um banco de dados orientado a grafos parece-me uma escolha natural. Neste caso optei pela utilização do [Neo4j](http://www.neo4j.org).
 
-A aplicação foi dividida em diferentes camadas lógicas com papéis bem definidos e fracamente acopladas, onde cada uma depende estritamente das camadas inferiores, maximizando assim a manutenabilidade do código. Além disso, a utilização do [Spring Framework] (http://projects.spring.io/spring-framework/) para a inversão de controle (IoC) e injeção de dependência (DI) aumenta a flexibilidade e testabilidade da aplicação. 
+A aplicação foi dividida em diferentes camadas lógicas com papéis bem definidos e fracamente acopladas, onde cada uma depende estritamente das camadas inferiores, maximizando assim a manutenabilidade do código. Além disso, a utilização do [Spring Framework] (http://projects.spring.io/spring-framework/) para a inversão de controle (IoC) e injeção de dependência (DI) aumenta a flexibilidade e a testabilidade da aplicação. 
 
 As funcionalidades do sistema foram expostas como APIs REST através do framework [Spring MVC] (http://projects.spring.io/spring-framework/) como forma de promover sua interoperabilidade com outros sistemas. Além disso, uma aplicação web de exemplo utilizando o [Dojo Toolkit](http://dojotoolkit.org/) foi criada para exemplificar a utilização destas APIs. 
 
@@ -50,7 +50,7 @@ B E 50
 D E 30
 ```
 
-*Cada rota será considerada como de sentido único entre a origem e o destino. Desta forma, no exemplo acima embora exista uma rota de A para B não há nenhuma rota de B para A.*
+*Cada rota será considerada como de sentido único entre a origem e o destino. Desta forma, no exemplo acima embora exista uma rota de A para B no entanto não há nenhuma rota de B para A.*
 
 ##### Requisição
 
@@ -101,11 +101,11 @@ D E 30
 
 #### GET /shortest-path/services/shipping/shippingDetails/{origin}/{destination}?vehicleMileage={vehicleMileage}&fuelPrice={fuelPrice}
 
-Calcula a rota com o menor custo entre um ponto de origem e um ponto de destino informado, levando em consideração a autonomia do veículo e o preço do combustível informado.
+Calcula a rota com o menor custo entre um ponto de origem e um ponto de destino, levando em consideração a autonomia do veículo e o preço do combustível informado.
 
 ##### Requisição
 
-Na URI da requisição deve se informar a origem o destino da rota em questão. A autonomia do veículo e o preço do combustível devem ser incluídos como parâmetros de consulta da requisição.
+Na URI da requisição deve se informar a origem e o destino da rota em questão. A autonomia do veículo e o preço do combustível devem ser incluídos como parâmetros de consulta da requisição.
 
 Exemplo
 
@@ -155,7 +155,7 @@ Exemplo
 
 - 204
 
-	Caso não exista nenhuma rota entre a origem e o destino
+	Caso não exista nenhuma rota entre a origem e o destino.
 
 - 400
 
