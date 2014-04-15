@@ -39,7 +39,7 @@ Para confirmar que a instalação foi bem sucedida, basta acessar a [aplicação
 
 Cria ou atualiza as informações da malha logística especificada. O formato de malha logística adotado é bastante simples, onde cada linha representa uma rota no formato descrito abaixo:
 
-**<origem>** **<destino>** **<distância>**.
+**origem** **destino** **distância**
 
 ```
 A B 10
@@ -50,20 +50,20 @@ B E 50
 D E 30
 ```
 
-*Cada rota será considerada como sendo de sentido único entre a origem e o destino. Desta forma, considerando-se o exemplo acima, embora exista uma rota de A para B não há nenhuma rota de B para A.*
+*Cada rota será considerada como de sentido único entre a origem e o destino. Desta forma, no exemplo acima embora exista uma rota de A para B não há nenhuma rota de B para A.*
 
 ##### Requisição
 
-Na URI da requisição deve ser informado o nome da malha logísica que será criada ou atualizada. No corpo da mensagem, os dados referentes a malha logística.
+Na URI da requisição deve se informar o nome da malha logísica que será criada ou atualizada. No corpo da mensagem, os dados referentes a malha logística.
 
-**representações de conteúdo aceitáveis:**
+**Representações aceitáveis**
 
 - text/plain
 
 Exemplo
 
 ```
-POST /shortest-path/services/shipping/logisticsNetwork/<b>Sample<b> HTTP/1.1
+POST /shortest-path/services/shipping/logisticsNetwork/Sample HTTP/1.1
 Host: localhost:8080
 User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:28.0) Gecko/20100101 Firefox/28.0
 Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
@@ -85,12 +85,71 @@ B E 50
 D E 30
 ```
 
-#### Respostas disponíveis:
+#### Resposta
 
-- 200 - Caso a requisição tenha sido processada com sucesso.
+- 200
+
+	Caso a requisição tenha sido processada com sucesso.
+
+- 500
+
+	Caso tenha ocorrido algum erro durante o processamento da requisição.
+
+### GET /shortest-path/services/shipping/shippingDetails/{origin}/{destination}?vehicleMileage={vehicleMileage}&fuelPrice={fuelPrice}
+
+Calcula a rota com o menor custo entre a origem e o destino informados, levando em consideração a autonomia do veículo e o preço do combustível.
+
+##### Requisição
+
+Na URI da requisição deve se informar a origem o destino da rota em questão. A autonomia do veículo e o preço do combustível devem ser incluídos como parâmetros de consulta da requisição.
+
+Exemplo
+
+```
+GET /shortest-path/services/shipping/shippingDetails/A/D?vehicleMileage=10&fuelPrice=2.5 HTTP/1.1
+Host: localhost:8080
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:28.0) Gecko/20100101 Firefox/28.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-us,en;q=0.8,pt-br;q=0.5,pt;q=0.3
+Accept-Encoding: gzip, deflate
+Content-Type: application/x-www-form-urlencoded
+X-Requested-With: XMLHttpRequest
+Referer: http://localhost:8080/shortest-path/
+Connection: keep-alive
+```
+
+#### Resposta
+
+- 200 - application/json
+
+	Caso a requisição tenha sido processada com sucesso. No corpo da mensagem será retornada uma representação em JSON da rota encontrada.
+
+Exemplo
+
+```
+	{
+		"shippingRate":6.25,
+		"shippingRoute": {
+			"origin":"A",
+			"destination":"D",
+			"legs":[
+				{
+					"origin":"A",
+					"destination":"B",
+					"distance":10.0
+				},
+				{
+					"origin":"B",
+					"destination":"D",
+					"distance":15.0
+				}
+			],
+			"length":25.0
+		}
+	}
+```
+
+- 204 - Caso não exista nenhuma rota entre a origem e o destino
+
 - 500 - Caso tenha ocorrido algum erro durante o processamento da requisição.
-
-
-### GET /shortest-path/services/shipping/shippingDetails/A/X
-
 
