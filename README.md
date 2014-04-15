@@ -33,13 +33,13 @@ Para instalar a aplicação, basta baixar o WAR disponível em [shortest-path.wa
 
 Para confirmar que a instalação foi bem sucedida, basta acessar a [aplicação web de exemplo](http://localhost:8080/shortest-path).
 
-## REST API Reference
+## APIs REST
 
-##### POST /shortest-path/services/shipping/logisticsNetwork/{network-name}
+#### POST /shortest-path/services/shipping/logisticsNetwork/{network-name}
 
 Cria ou atualiza as informações da malha logística especificada. O formato de malha logística adotado é bastante simples, onde cada linha representa uma rota no formato descrito abaixo:
 
-**ponto de origem** **ponto de destino** **distância em entre os pontos em quilômetros**.
+**<origem>** **<destino>** **<distância>**.
 
 ```
 A B 10
@@ -52,7 +52,7 @@ D E 30
 
 *Cada rota será considerada como sendo de sentido único entre a origem e o destino. Desta forma, considerando-se o exemplo acima, embora exista uma rota de A para B não há nenhuma rota de B para A.*
 
--Requisição
+##### Requisição
 
 Na URI da requisição deve ser informado o nome da malha logísica que será criada ou atualizada. No corpo da mensagem, os dados referentes a malha logística.
 
@@ -85,13 +85,10 @@ B E 50
 D E 30
 ```
 
-Respostas disponíveis:
+#### Respostas disponíveis:
 
 - 200 - Caso a requisição tenha sido processada com sucesso.
 - 500 - Caso tenha ocorrido algum erro durante o processamento da requisição.
-
-
-
 
 
 ### GET /shortest-path/services/shipping/shippingDetails/A/X
