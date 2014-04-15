@@ -15,8 +15,6 @@ Veja o [Diagrama de Componentes](https://googledrive.com/host/0B_F_ziKVZ1BNTXFCd
 
 Podemos ainda utilizar [balanceadores de carga e clusters](https://googledrive.com/host/0B_F_ziKVZ1BNTXFCdGR1WWdPajQ/sortest-path-architecture.png) para prover a alta disponibilidade e a tolerância a falhas ao sistema. A computação em nuvem pode ainda trazer outros benefícios como provisionamento e elasticidade.
 
-A aplicação de exemplo está configurada para utilizar o Neo4j 
-
 ## Pré-Requisitos
 
 - [Java Runtime Edition 7+](http://www.oracle.com/technetwork/java/javase/downloads/index.html?ssSourceSiteId=otnjp)
