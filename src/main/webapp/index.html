@@ -22,7 +22,7 @@
 			"dijit/form/Button",
 			"dijit/form/Form",
 			"dijit/form/NumberTextBox",
-			"dijit/form/Textarea",
+			"dijit/form/SimpleTextarea",
 			"dijit/registry",
 			"dijit/Tooltip",
 			"dojox/grid/DataGrid",
@@ -56,10 +56,10 @@
 							"dojo/dom",
 							"dojox/validate"
 						], function(dom, validate) {
-							dojo.xhrPut({
+							dojo.xhrPost({
 								url: "services/shipping/logisticsNetwork/" + dom.byId("networkName").value,
-								putData: dom.byId("logisticsNetwork").value,
-								handleAs: "text",
+								postData: dom.byId("logisticsNetwork").value,
+								headers: {"Content-Type": "text/plain;charset=UTF-8"},
 								load: function(response) {
 									console.log("xhrPut succeeded", response);
 									dojo.byId("addLogisticsNetworkMessage").innerHTML = "<p>Logistics network added</p>";
@@ -76,7 +76,7 @@
 					<div data-dojo-type="dojox/layout/TableContainer" data-dojo-props="cols:1">
 						<input id="networkName" title="Network Name: " data-dojo-type="dijit/form/TextBox" required="true" value="Sample" />
 						<div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'networkName',position:['after']">Network name</div>
-						<textarea id="logisticsNetwork" title="Logistics Network: " data-dojo-type="dijit/form/Textarea" required="true" style="width: 200px;">A B 10&#10;B D 15&#10;A C 20&#10;C D 30&#10;B E 50&#10;D E 30</textarea>
+						<textarea id="logisticsNetwork" title="Logistics Network: " data-dojo-type="dijit/form/SimpleTextarea" required="true" rows="8" style="width: 176px;">A B 10&#10;B D 15&#10;A C 20&#10;C D 30&#10;B E 50&#10;D E 30</textarea>
 							<div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'logisticsNetwork',position:['after']">
 								<p>
 								A Logistics Network consists of multiple Legs, each one<br>

@@ -79,8 +79,8 @@ public class ShippingController {
 	 * @throws ServiceException
 	 *             if a service access error occurs.
 	 */
-	@RequestMapping(value = "/logisticsNetwork/{name}", method = RequestMethod.PUT)
-	@ResponseStatus(HttpStatus.ACCEPTED)
+	@RequestMapping(value = "/logisticsNetwork/{name}", method = RequestMethod.POST, headers = "content-type=text/plain")
+	@ResponseStatus(HttpStatus.OK)
 	public void addLogisticsNetwork(@PathVariable String name,
 			@RequestBody String legs) throws ServiceException {
 		// Adds a new logistics network used for shipping route selection
