@@ -29,7 +29,7 @@ A aplicação de exemplo está configurada para utilizar o Neo4j
 
 ## Instalação da aplicação
 
-Para instalar a aplicação, basta baixar o WAR disponível em [shortest-path.war](https://googledrive.com/host/0B_F_ziKVZ1BNTXFCdGR1WWdPajQ/shortest-path-component-diagram.png) e copiá-lo para o diretório TOMCAT_HOME/webapps.
+Para instalar a aplicação, basta baixar o WAR disponível em [shortest-path.war](https://googledrive.com/host/0B_F_ziKVZ1BNTXFCdGR1WWdPajQ/shortest-path.war) e copiá-lo para o diretório TOMCAT_HOME/webapps.
 
 Para confirmar que a instalação foi bem sucedida, basta acessar a [aplicação web de exemplo](http://localhost:8080/shortest-path).
 
@@ -95,9 +95,9 @@ D E 30
 
 	Caso tenha ocorrido algum erro durante o processamento da requisição.
 
-### GET /shortest-path/services/shipping/shippingDetails/{origin}/{destination}?vehicleMileage={vehicleMileage}&fuelPrice={fuelPrice}
+#### GET /shortest-path/services/shipping/shippingDetails/{origin}/{destination}?vehicleMileage={vehicleMileage}&fuelPrice={fuelPrice}
 
-Calcula a rota com o menor custo entre a origem e o destino informados, levando em consideração a autonomia do veículo e o preço do combustível.
+Calcula a rota com o menor custo entre um ponto de origem e um ponto de destino informado, levando em consideração a autonomia do veículo e o preço do combustível informado.
 
 ##### Requisição
 
@@ -152,4 +152,8 @@ Exemplo
 - 204 - Caso não exista nenhuma rota entre a origem e o destino
 
 - 500 - Caso tenha ocorrido algum erro durante o processamento da requisição.
+
+## Desenvolvedores
+
+A documentação das APIs Java do projeto está disponível em [Shortest Path API](https://googledrive.com/host/0B_F_ziKVZ1BNTXFCdGR1WWdPajQ/apidocs/index.html).
 
