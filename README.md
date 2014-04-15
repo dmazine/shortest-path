@@ -48,7 +48,7 @@ B E 50
 D E 30
 ```
 
-*Cada rota será considerada como de sentido único entre a origem e o destino. Desta forma, no exemplo acima embora exista uma rota de A para B no entanto não há nenhuma rota de B para A.*
+*Cada rota será considerada como de sentido único entre a origem e o destino. Desta forma, no exemplo acima embora exista uma rota de A para B não há nenhuma rota de B para A.*
 
 ##### Requisição
 
