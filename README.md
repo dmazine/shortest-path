@@ -7,9 +7,9 @@ O projeto consiste em "novo sistema" de logística visa que obter sempre a rota 
 
 Considerando-se que o cálculo da rota com o menor custo pode ser encarado como uma especialização do [Problema do caminho mínimo](http://pt.wikipedia.org/wiki/Problema_do_caminho_m%C3%ADnimo), cujo objetivo é determinar o menor custo para a travessia de um grafo entre dois vértices, e que as informações devem ser persistidas para que elas não se percam entre os deployments da aplicação, a utilização de um banco de dados orientado a grafos parece-me uma escolha natural. Neste caso optei pela utilização do [Neo4j](http://www.neo4j.org).
 
-A aplicação foi dividida em diferentes camadas lógicas com papéis bem definidos e fracamente acopladas, onde cada uma depende estritamente das camadas inferiores, maximizando assim a matenabilidade do código. Além disso, a utilização do [Spring Framework] (http://projects.spring.io/spring-framework/) para a inversão de controle (IoC) e injeção de dependência (DI) aumenta a flexibilidade e testabilidade da aplicação. 
+A aplicação foi dividida em diferentes camadas lógicas com papéis bem definidos e fracamente acopladas, onde cada uma depende estritamente das camadas inferiores, maximizando assim a manutenabilidade do código. Além disso, a utilização do [Spring Framework] (http://projects.spring.io/spring-framework/) para a inversão de controle (IoC) e injeção de dependência (DI) aumenta a flexibilidade e testabilidade da aplicação. 
 
-A funcionalidades do sistema foram expostas como APIs REST através do framework [Spring MVC] (http://projects.spring.io/spring-framework/) como forma de promover sua interoperabilidade com outros sistemas. Além disso, uma aplicação web de exemplo utilizando o [Dojo Toolkit](http://dojotoolkit.org/) foi criada para exemplificar a utilização destas APIs. 
+As funcionalidades do sistema foram expostas como APIs REST através do framework [Spring MVC] (http://projects.spring.io/spring-framework/) como forma de promover sua interoperabilidade com outros sistemas. Além disso, uma aplicação web de exemplo utilizando o [Dojo Toolkit](http://dojotoolkit.org/) foi criada para exemplificar a utilização destas APIs. 
 
 Veja o [Diagrama de Componentes](https://googledrive.com/host/0B_F_ziKVZ1BNTXFCdGR1WWdPajQ/shortest-path-component-diagram.png) da aplicação.
 
@@ -33,6 +33,67 @@ Para instalar a aplicação, basta baixar o WAR disponível em [shortest-path.wa
 
 Para confirmar que a instalação foi bem sucedida, basta acessar a [aplicação web de exemplo](http://localhost:8080/shortest-path).
 
-## APIs
+## REST API Reference
+
+### POST /shortest-path/services/shipping/logisticsNetwork/{network-name}
+
+Cria ou atualiza as informações da malha logística especificada. O formato de malha logística adotado é bastante simples, onde cada linha representa uma rota no formato descrito abaixo:
+
+**ponto de origem** **ponto de destino** **distância em entre os pontos em quilômetros**.
+
+```
+A B 10
+B D 15
+A C 20
+C D 30
+B E 50
+D E 30
+```
+
+*Cada rota será considerada como sendo de sentido único entre a origem e o destino. Desta forma, considerando-se o exemplo acima, embora exista uma rota de A para B não há nenhuma rota de B para A.*
+
+-Requisição
+
+Na URI da requisição deve ser informado o nome da malha logísica que será criada ou atualizada. No corpo da mensagem, os dados referentes a malha logística.
+
+**representações de conteúdo aceitáveis:**
+
+- text/plain
+
+Exemplo
+
+```
+POST /shortest-path/services/shipping/logisticsNetwork/<b>Sample<b> HTTP/1.1
+Host: localhost:8080
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:28.0) Gecko/20100101 Firefox/28.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-us,en;q=0.8,pt-br;q=0.5,pt;q=0.3
+Accept-Encoding: gzip, deflate
+Content-Type: text/plain;charset=UTF-8
+X-Requested-With: XMLHttpRequest
+Referer: http://localhost:8080/shortest-path/
+Content-Length: 41
+Connection: keep-alive
+Pragma: no-cache
+Cache-Control: no-cache
+
+A B 10
+B D 15
+A C 20
+C D 30
+B E 50
+D E 30
+```
+
+Respostas disponíveis:
+
+- 200 - Caso a requisição tenha sido processada com sucesso.
+- 500 - Caso tenha ocorrido algum erro durante o processamento da requisição.
+
+
+
+
+
+### GET /shortest-path/services/shipping/shippingDetails/A/X
 
 
