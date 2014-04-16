@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.drmit.shortestpath.infrastructure.repository;
+package org.drmit.shortestpath.infrastructure.repository.neo4j;
 
 import static org.junit.Assert.assertEquals;
 
@@ -34,6 +34,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.drmit.shortestpath.domain.model.Route;
 import org.drmit.shortestpath.domain.model.Leg;
+import org.drmit.shortestpath.infrastructure.repository.RepositoryExeption;
+import org.drmit.shortestpath.infrastructure.repository.RouteNotFoundRepositoryExeption;
+import org.drmit.shortestpath.infrastructure.repository.RouteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
